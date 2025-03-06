@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h1>Lista de Posts: </h1>
+	<% posts.forEach(post => { %>
+	<div>
+		<h2><%= post.titulo %></h2>
+		<p><%= post.conteudo %></p>
+		<button onclick="editarPost(<%= post.id %>)">Editar</button>
+		<a href="/deletar/<%= post.id %>">Excluir</a>
+	</div>
+	
+
+	<div id="editar-<%= post.id %>" style="display: none;">
+		<form action="/editar/<%= post.id %>" method="POST">
+			<p>Título: </p>
+			<input type="text" name="titulo" value="<%= post.titulo %>">
+			<p>Conteúdo: </p>
+			<textarea name="conteudo"><%= post.conteudo %></textarea>
+			<button type="submit">Salvar</button>
+			<button type="button" onclick="cancelarEdicao(<%= post.id %>)">Cancelar</button>
+		</form>
+	</div>
+
+	<hr>
+	<% }) %>
+
+
+<script>
+	function editarPost(id){
+		let editar = document.getElementById("editar-" + id)
+		editar.style.display = "block"
+
+		let exibir = document.getElementById("exibir-" + id)
+		exibir.style.display = "none"
+	}
+
+	function cancelarEdicao(id){
+		let editar = document.getElementById("editar-" + id)
+		editar.style.display = "none"
+
+		let exibir = document.getElementById("exibir-" + id)
+		exibir.style.display = "block"
+	}
+</script>
+</body>
+</html>
